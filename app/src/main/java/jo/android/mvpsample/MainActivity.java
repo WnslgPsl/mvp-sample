@@ -7,13 +7,12 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
+import jo.android.mvpsample.util.NetworkDialog;
+
 public class MainActivity extends AppCompatActivity implements MainContract.View, OnClickListener{
 
-    private TextView mTvCount;
-    private Button mBtnPlus;
-    private Button mBtnMinus;
-
     private MainContract.Presenter presenter;
+    private NetworkDialog mNetworkDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,35 +21,30 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         presenter = new MainPresenter();
         presenter.setView(this);
+        mNetworkDialog = new NetworkDialog(MainActivity.this);
 
-        mTvCount = (TextView)findViewById(R.id.text);
-
-        mBtnPlus = (Button)findViewById(R.id.bt_plus);
-        mBtnPlus.setOnClickListener(this);
-        mBtnMinus = (Button)findViewById(R.id.bt_minus);
-        mBtnMinus.setOnClickListener(this);
+        presenter.loadFlickrImage();
 
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.bt_plus:
-                presenter.plusNum();
-                break;
-            case R.id.bt_minus:
-                presenter.miunsNum();
-                break;
+
         }
     }
 
     @Override
-    public void updatePlus(int num) {
-        mTvCount.setText(num + " count");
+    public void hideProgress() {
+        if(mNetworkDialog != null && mNetworkDialog.isShowing()){
+            mNetworkDialog.dismissNetworkDialog();
+        }
     }
 
     @Override
-    public void updateMinus(int num) {
-        mTvCount.setText(num + " count");
+    public void showProgress() {
+        if(mNetworkDialog != null && !mNetworkDialog.isShowing()){
+            mNetworkDialog.showNetworkDialog();
+        }
     }
 }

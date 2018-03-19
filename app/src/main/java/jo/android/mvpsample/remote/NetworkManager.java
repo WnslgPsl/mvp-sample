@@ -9,21 +9,10 @@ import retrofit2.Response;
 
 public class NetworkManager<T> {
 
-    private Context mContext;
-    private boolean mNetworkDialogCheck;
-    private NetworkDialog mNetworkDialog;
     private Call<T> call;
 
-    public NetworkManager(Context mContext, Call<T> call, boolean mNetworkDialogCheck){
-        this.mContext = mContext;
+    public NetworkManager(Call<T> call){
         this.call = call;
-        this.mNetworkDialogCheck = mNetworkDialogCheck;
-
-        mNetworkDialog = new NetworkDialog(mContext);
-
-        if(mNetworkDialog != null && mNetworkDialogCheck){
-            mNetworkDialog.showNetworkDialog();
-        }
     }
 
     public void setOnStartNetworkListener(final NetworkCallbackListener mNetworkCallbackListener){
@@ -33,20 +22,11 @@ public class NetworkManager<T> {
                 if (response.body() != null) {
                     mNetworkCallbackListener.onResponse(response.body());
                 }
-
-                if(mNetworkDialog != null && mNetworkDialogCheck){
-                    mNetworkDialog.dismissNetworkDialog();
-                }
             }
 
             @Override
             public void onFailure(Call<T> call, Throwable t) {
                 mNetworkCallbackListener.onFailure(t.getMessage().toString());
-
-                if(mNetworkDialog != null && mNetworkDialogCheck){
-                    mNetworkDialog.dismissNetworkDialog();
-                }
-
             }
         });
     }

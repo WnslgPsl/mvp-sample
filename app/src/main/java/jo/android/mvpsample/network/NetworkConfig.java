@@ -1,7 +1,7 @@
-package jo.android.mvpsample.remote;
+package jo.android.mvpsample.network;
 
-import jo.android.mvpsample.remote.interceptor.ApplicationInterceptor;
-import jo.android.mvpsample.remote.interceptor.NetworkInterceptor;
+import jo.android.mvpsample.network.interceptor.ApplicationInterceptor;
+import jo.android.mvpsample.network.interceptor.NetworkInterceptor;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -15,12 +15,12 @@ public class NetworkConfig {
         return builder.build();
     }
 
-    public static NetworkCallbackListener createRetrofit(){
+    public static NetworkCallbackService createRetrofit(){
         Retrofit.Builder builder = new Retrofit.Builder();
-        builder.baseUrl("https://api.flickr.com/services/rest/")
+        builder.baseUrl("https://api.flickr.com/services/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(createOkHttpClient());
         Retrofit retrofit = builder.build();
-        return retrofit.create(NetworkCallbackListener.class);
+        return retrofit.create(NetworkCallbackService.class);
     }
 }

@@ -1,9 +1,17 @@
 package jo.android.mvpsample;
 
-public class MainPresenter implements MainContract.Presenter{
+import android.support.annotation.Nullable;
+
+import jo.android.mvpsample.data.PhotoResponse;
+import jo.android.mvpsample.remote.NetworkCallbackListener;
+import jo.android.mvpsample.network.NetworkConfig;
+import jo.android.mvpsample.remote.NetworkManager;
+import retrofit2.Call;
+
+public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View view = null;
-    private int num = 0;
+
 
     @Override
     public void setView(MainContract.View view) {
@@ -11,15 +19,24 @@ public class MainPresenter implements MainContract.Presenter{
     }
 
     @Override
-    public void plusNum() {
-        num += 1;
-        view.updatePlus(num);
-    }
+    public void loadFlickrImage() {
 
-    @Override
-    public void miunsNum() {
-        num -= 1;
-        view.updateMinus(num);
+        view.showProgress();
+
+        Call<PhotoResponse> call = NetworkConfig.createRetrofit().getFlickrSearch("json", "1",
+                "flickr.photos.search", BuildConfig.FLICKR_API_KEY, "ogm", 1, 20);
+        NetworkManager<PhotoResponse> networkManager = new NetworkManager<>(call);
+        networkManager.setOnStartNetworkListener(new NetworkCallbackListener<PhotoResponse>() {
+            @Override
+            public void onResponse(@Nullable PhotoResponse photoResponse) {
+                view.hideProgress();
+            }
+
+            @Override
+            public void onFailure(String msg) {
+                view.hideProgress();
+            }
+        });
     }
 
 }

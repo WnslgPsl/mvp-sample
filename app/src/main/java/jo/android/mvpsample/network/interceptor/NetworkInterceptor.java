@@ -1,4 +1,4 @@
-package jo.android.mvpsample.remote.interceptor;
+package jo.android.mvpsample.network.interceptor;
 
 import android.util.Log;
 
