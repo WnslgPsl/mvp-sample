@@ -1,6 +1,8 @@
-package jo.android.mvpsample.data;
+package jo.android.mvpsample.view.main.data;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 public class Photos {
 
@@ -13,7 +15,7 @@ public class Photos {
     @SerializedName("total")
     private String total;
     @SerializedName("photo")
-    private Photo photo;
+    private ArrayList<Photo> photo;
 
     public Photos(){
     }
@@ -50,11 +52,11 @@ public class Photos {
         this.total = total;
     }
 
-    public Photo getPhoto() {
+    public ArrayList<Photo> getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Photo photo) {
+    public void setPhoto(ArrayList<Photo> photo) {
         this.photo = photo;
     }
 }

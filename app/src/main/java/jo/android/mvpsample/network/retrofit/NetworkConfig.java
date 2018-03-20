@@ -1,4 +1,4 @@
-package jo.android.mvpsample.network;
+package jo.android.mvpsample.network.retrofit;
 
 import jo.android.mvpsample.network.interceptor.ApplicationInterceptor;
 import jo.android.mvpsample.network.interceptor.NetworkInterceptor;

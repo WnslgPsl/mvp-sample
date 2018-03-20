@@ -1,4 +1,4 @@
-package jo.android.mvpsample.remote;
+package jo.android.mvpsample.network.retrofit;
 
 import android.support.annotation.Nullable;
 

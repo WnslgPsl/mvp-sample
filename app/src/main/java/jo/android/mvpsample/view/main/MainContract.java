@@ -1,4 +1,4 @@
-package jo.android.mvpsample;
+package jo.android.mvpsample.view.main;
 
 public interface MainContract {
 
@@ -8,7 +8,6 @@ public interface MainContract {
     }
 
     interface Presenter {
-        void setView(View view);
         void loadFlickrImage();
     }
 }

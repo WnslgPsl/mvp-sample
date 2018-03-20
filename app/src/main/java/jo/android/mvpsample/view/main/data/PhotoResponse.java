@@ -1,4 +1,4 @@
-package jo.android.mvpsample.data;
+package jo.android.mvpsample.view.main.data;
 
 public class PhotoResponse {
 
@@ -41,4 +41,6 @@ public class PhotoResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
+
 }

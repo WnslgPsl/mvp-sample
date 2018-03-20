@@ -1,8 +1,5 @@
-package jo.android.mvpsample.remote;
+package jo.android.mvpsample.network.retrofit;
 
-import android.content.Context;
-
-import jo.android.mvpsample.util.NetworkDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -19,8 +16,15 @@ public class NetworkManager<T> {
         call.enqueue(new Callback<T>() {
             @Override
             public void onResponse(Call<T> call, Response<T> response) {
-                if (response.body() != null) {
-                    mNetworkCallbackListener.onResponse(response.body());
+
+                if(response.isSuccessful()){
+                    if (response.body() != null) {
+                        mNetworkCallbackListener.onResponse(response.body());
+                    }else{
+                        mNetworkCallbackListener.onFailure("요청은 성공했으나, 응답 데이터가 없음.");
+                    }
+                }else{
+                    mNetworkCallbackListener.onFailure("요청은 성공했으나, 서버 개발자의 의도에 의한 Error 처리.");
                 }
             }
 

@@ -1,6 +1,6 @@
-package jo.android.mvpsample.network;
+package jo.android.mvpsample.network.retrofit;
 
-import jo.android.mvpsample.data.PhotoResponse;
+import jo.android.mvpsample.view.main.data.PhotoResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;

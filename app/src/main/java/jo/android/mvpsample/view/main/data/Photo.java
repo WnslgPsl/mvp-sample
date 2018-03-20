@@ -1,17 +1,18 @@
-package jo.android.mvpsample.data;
+package jo.android.mvpsample.view.main.data;
 
 public class Photo {
 
     private String id;
     private String owner;
     private String secret;
+    private String server;
     private int farm;
     private String title;
     private int ispublic;
     private int isfriend;
     private int isfamily;
 
-    public Photo(){
+    public Photo() {
     }
 
     public String getId() {
@@ -36,6 +37,14 @@ public class Photo {
 
     public void setSecret(String secret) {
         this.secret = secret;
+    }
+
+    public String getServer() {
+        return server;
+    }
+
+    public void setServer(String server) {
+        this.server = server;
     }
 
     public int getFarm() {
@@ -77,4 +86,19 @@ public class Photo {
     public void setIsfamily(int isfamily) {
         this.isfamily = isfamily;
     }
+
+    /**
+     * TODO: 아래의 규칙으로 이미지 URL 요청하여야 하며, 해당 샘플에서는 가장 기본 방법으로 요청함.
+     * https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
+     * or
+     * https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_[mstzb].jpg
+     * or
+     * https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{o-secret}_o.(jpg|gif|png)
+     */
+
+    public String getPhotoURL() {
+        return "https://farm" + farm + ".staticflickr.com/" + server + "/" + id + "_" + secret + ".jpg";
+    }
+
+
 }
