@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 import jo.android.mvpsample.R;
 import jo.android.mvpsample.remote.MainRepository;
@@ -59,5 +60,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         if(mNetworkDialog != null && !mNetworkDialog.isShowing()){
             mNetworkDialog.showNetworkDialog();
         }
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showDetailInfo(String title) {
+        Toast.makeText(MainActivity.this, "Photo Title : " + title, Toast.LENGTH_SHORT).show();
     }
 }

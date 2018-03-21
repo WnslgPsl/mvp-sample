@@ -1,14 +1,19 @@
 package jo.android.mvpsample.view.main;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import jo.android.mvpsample.BuildConfig;
 import jo.android.mvpsample.remote.MainDataSource;
 import jo.android.mvpsample.remote.MainRepository;
+import jo.android.mvpsample.util.OnItemClickListener;
 import jo.android.mvpsample.view.main.adapter.AdtSearchListContract;
+import jo.android.mvpsample.view.main.data.Photo;
 import jo.android.mvpsample.view.main.data.PhotoResponse;
 
-public class MainPresenter implements MainContract.Presenter {
+public class MainPresenter implements MainContract.Presenter, OnItemClickListener{
 
-    private MainContract.View view = null;
+    private MainContract.View view;
     private MainRepository mainRepository;
     private AdtSearchListContract.View adapterView;
     private AdtSearchListContract.Model adapterModel;
@@ -19,6 +24,12 @@ public class MainPresenter implements MainContract.Presenter {
         this.mainRepository = mainRepository;
         this.adapterView = adapterView;
         this.adapterModel = adapterModel;
+        this.adapterView.setOnItemClickListener(this);
+    }
+
+    @Override
+    public void onItemClick(Photo photo) {
+        view.showDetailInfo(photo.getId());
     }
 
     @Override
@@ -27,8 +38,8 @@ public class MainPresenter implements MainContract.Presenter {
         view.showProgress();
 
         mainRepository.getSearchPhotos("json", "1",
-                "flickr.photos.search", "ogm", BuildConfig.FLICKR_API_KEY, 1,
-                20, new MainDataSource.LoadFlickrCallback<PhotoResponse>() {
+                "flickr.photos.search", "LOVE", BuildConfig.FLICKR_API_KEY, 1,
+                200, new MainDataSource.LoadFlickrCallback<PhotoResponse>() {
                     @Override
                     public void onSuccess(PhotoResponse photoResponse) {
                         view.hideProgress();
@@ -37,7 +48,7 @@ public class MainPresenter implements MainContract.Presenter {
                             adapterModel.addItems(photoResponse.getPhotos().getPhoto());
                             adapterView.updateView();
                         }else{
-                            //TODO: ok가 아닐 시 액티비티로 상태값 전달
+                            view.showMessage("stat : " + photoResponse.getStat());
                         }
 
                     }
@@ -45,9 +56,13 @@ public class MainPresenter implements MainContract.Presenter {
                     @Override
                     public void onFailure(String message) {
                         view.hideProgress();
-                        //TODO: ok가 아닐 시 액티비티로 상태값 전달
+                        view.showMessage("Failure : " + message);
                     }
                 });
     }
 
+    @Override
+    public void onItemClick(int position) {
+        view.showDetailInfo(adapterModel.getItem(position).getTitle());
+    }
 }

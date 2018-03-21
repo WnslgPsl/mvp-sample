@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import jo.android.mvpsample.R;
 import jo.android.mvpsample.util.CustomRecyclerViewHolder;
+import jo.android.mvpsample.util.OnItemClickListener;
 import jo.android.mvpsample.view.main.adapter.viewholder.SearchListrPhotoViewHolder;
 import jo.android.mvpsample.view.main.data.Photo;
 
@@ -19,6 +20,8 @@ public class AdtSearchList extends RecyclerView.Adapter<CustomRecyclerViewHolder
 
     private Context mContext;
     private ArrayList<Photo> items = new ArrayList<>();
+    private OnItemClickListener onItemClickListener;
+
 
     public AdtSearchList(Context mContext) {
         this.mContext = mContext;
@@ -28,7 +31,7 @@ public class AdtSearchList extends RecyclerView.Adapter<CustomRecyclerViewHolder
     @Override
     public CustomRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.search_photo_item, parent, false);
-        return new SearchListrPhotoViewHolder(v);
+        return new SearchListrPhotoViewHolder(v, onItemClickListener);
     }
 
     @Override
@@ -44,6 +47,16 @@ public class AdtSearchList extends RecyclerView.Adapter<CustomRecyclerViewHolder
     @Override
     public void updateView() {
         notifyDataSetChanged();
+    }
+
+    @Override
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    @Override
+    public Photo getItem(int position) {
+        return items.get(position);
     }
 
     @Override
