@@ -12,7 +12,6 @@ public interface MainContract {
     }
 
     interface Presenter {
-        void onItemClick(Photo photo);
         void loadFlickrImage();
     }
 }

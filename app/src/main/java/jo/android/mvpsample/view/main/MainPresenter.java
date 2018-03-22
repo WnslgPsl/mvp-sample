@@ -19,17 +19,12 @@ public class MainPresenter implements MainContract.Presenter, OnItemClickListene
     private AdtSearchListContract.Model adapterModel;
 
     public MainPresenter(MainContract.View view, MainRepository mainRepository,
-                         AdtSearchListContract.View adapterView, AdtSearchListContract.Model adapterModel){
+                         AdtSearchListContract.View adapterView, AdtSearchListContract.Model adapterModel) {
         this.view = view;
         this.mainRepository = mainRepository;
         this.adapterView = adapterView;
         this.adapterModel = adapterModel;
         this.adapterView.setOnItemClickListener(this);
-    }
-
-    @Override
-    public void onItemClick(Photo photo) {
-        view.showDetailInfo(photo.getId());
     }
 
     @Override
